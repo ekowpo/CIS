@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1663fb2877864cb0a9d9aa01e356102c" Name="Diagram1" ZoomLevel="34">
+        <EntityTypeShape EntityType="csisModel.course" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.courseadvisor" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.courseregistration" Width="1.5" PointX="14.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.department" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.feespayment" Width="1.5" PointX="10.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.lecturehall" Width="1.5" PointX="1.625" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.lecturer" Width="1.5" PointX="6" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.login" Width="1.5" PointX="12.875" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.program" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.role" Width="1.5" PointX="18.125" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.semester" Width="1.5" PointX="8.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.semestercourse" Width="1.5" PointX="12.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.semesterfee" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.student" Width="1.5" PointX="15" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.user" Width="1.5" PointX="8.375" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="csisModel.finaltran" Width="1.5" PointX="18.25" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="csisModel.course_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.semestercourse_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.courseadvisor_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.courseadvisor_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.courseregistration_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.courseregistration_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.lecturer_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.programs_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.feespayment_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.feespayment_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.semestercourse_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.lecturer_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.semestercourse_ibfk_4" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.login_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.login_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.semesterfees_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.student_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.semestercourse_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.semesterfees_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.semesterfees_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="csisModel.student_ibfk_1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

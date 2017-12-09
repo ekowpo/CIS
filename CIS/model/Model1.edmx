@@ -1,0 +1,1345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="csisModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="course">
+          <Key>
+            <PropertyRef Name="course_id" />
+          </Key>
+          <Property Name="course_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="description" Type="text" Nullable="false" />
+          <Property Name="department" Type="int" Nullable="false" />
+          <Property Name="credit" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="courseadvisor">
+          <Key>
+            <PropertyRef Name="advisor_id" />
+          </Key>
+          <Property Name="advisor_id" Type="int" Nullable="false" />
+          <Property Name="department" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="courseregistration">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="semesterCourse_id" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="semesterCourse_id" Type="int" Nullable="false" />
+          <Property Name="Grade" Type="varchar" MaxLength="2" />
+          <Property Name="Status" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="gradepoint" Type="double" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="text" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="feespayment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="semester_fee_id" Type="int" Nullable="false" />
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="amount" Type="double" Nullable="false" />
+          <Property Name="date" Type="timestamp" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lecturehalls">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="building" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="room_number" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="space" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lecturer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="department" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="login">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="programs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Department" Type="int" Nullable="false" />
+          <Property Name="requiredCredit" Type="int" Nullable="false" />
+          <Property Name="termFees" Type="double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="semester">
+          <Key>
+            <PropertyRef Name="semester_id" />
+          </Key>
+          <Property Name="semester_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="startDate" Type="date" Nullable="false" />
+          <Property Name="endDate" Type="date" Nullable="false" />
+          <Property Name="DNE" Type="date" />
+        </EntityType>
+        <EntityType Name="semestercourse">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="course_id" Type="int" Nullable="false" />
+          <Property Name="semester_id" Type="int" Nullable="false" />
+          <Property Name="day" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="start_time" Type="time" Precision="0" Nullable="false" />
+          <Property Name="end_time" Type="time" Precision="0" Nullable="false" />
+          <Property Name="lecture_hall" Type="int" Nullable="false" />
+          <Property Name="lecturer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="semesterfees">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="program_id" Type="int" Nullable="false" />
+          <Property Name="semester_id" Type="int" Nullable="false" />
+          <Property Name="amount" Type="double" Nullable="false" />
+          <Property Name="student_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="program" Type="int" Nullable="false" />
+          <Property Name="admission_date" Type="date" Nullable="false" />
+          <Property Name="completion_date" Type="date" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="email" Type="text" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address" Type="text" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.csis.finaltrans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="finaltrans">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="depart" />
+            <PropertyRef Name="program" />
+            <PropertyRef Name="requiredCredit" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="511" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="depart" Type="text" Nullable="false" />
+          <Property Name="program" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="requiredCredit" Type="int" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="description" Type="text" Nullable="false" />
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="semesterName" Type="varchar" MaxLength="25" />
+          <Property Name="Grade" Type="varchar" MaxLength="2" />
+          <Property Name="gradepoint" Type="double" />
+        </EntityType>
+        <Association Name="course_ibfk_1">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="course" Type="Self.course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="course">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseadvisor_ibfk_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="courseadvisor" Type="Self.courseadvisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="courseadvisor">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseadvisor_ibfk_2">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="courseadvisor" Type="Self.courseadvisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="courseadvisor">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseregistration_ibfk_1">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="courseregistration" Type="Self.courseregistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="courseregistration">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseregistration_ibfk_2">
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="1" />
+          <End Role="courseregistration" Type="Self.courseregistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semestercourse">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="courseregistration">
+              <PropertyRef Name="semesterCourse_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="feespayment_ibfk_1">
+          <End Role="semesterfees" Type="Self.semesterfees" Multiplicity="1" />
+          <End Role="feespayment" Type="Self.feespayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semesterfees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="feespayment">
+              <PropertyRef Name="semester_fee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="feespayment_ibfk_2">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="feespayment" Type="Self.feespayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="feespayment">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lecturer_ibfk_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="lecturer">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lecturer_ibfk_2">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="lecturer">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="login_ibfk_1">
+          <End Role="roles" Type="Self.roles" Multiplicity="1" />
+          <End Role="login" Type="Self.login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="login">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="login_ibfk_2">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="login" Type="Self.login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="login">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="programs_ibfk_1">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="programs" Type="Self.programs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="programs">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_1">
+          <End Role="semester" Type="Self.semester" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semester">
+              <PropertyRef Name="semester_id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="semester_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_2">
+          <End Role="course" Type="Self.course" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course">
+              <PropertyRef Name="course_id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_3">
+          <End Role="lecturehalls" Type="Self.lecturehalls" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturehalls">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="lecture_hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_4">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="lecturer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semesterfees_ibfk_1">
+          <End Role="semester" Type="Self.semester" Multiplicity="1" />
+          <End Role="semesterfees" Type="Self.semesterfees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semester">
+              <PropertyRef Name="semester_id" />
+            </Principal>
+            <Dependent Role="semesterfees">
+              <PropertyRef Name="semester_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semesterfees_ibfk_2">
+          <End Role="programs" Type="Self.programs" Multiplicity="1" />
+          <End Role="semesterfees" Type="Self.semesterfees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="semesterfees">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semesterfees_ibfk_3">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="semesterfees" Type="Self.semesterfees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="semesterfees">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_ibfk_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_ibfk_2">
+          <End Role="programs" Type="Self.programs" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="program" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="transcript" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="csis">
+          <Parameter Name="id_input" Type="int" Mode="In" />
+          <Parameter Name="code" Type="varchar" Mode="Out" />
+          <Parameter Name="description" Type="varchar" Mode="Out" />
+          <Parameter Name="SsemesterName" Type="varchar" Mode="Out" />
+          <Parameter Name="GRADE" Type="varchar" Mode="Out" />
+          <Parameter Name="gradepoint" Type="double" Mode="Out" />
+        </Function>
+        <EntityContainer Name="csisModelStoreContainer">
+          <EntitySet Name="course" EntityType="Self.course" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="courseadvisor" EntityType="Self.courseadvisor" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="courseregistration" EntityType="Self.courseregistration" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="feespayment" EntityType="Self.feespayment" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="lecturehalls" EntityType="Self.lecturehalls" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="lecturer" EntityType="Self.lecturer" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="login" EntityType="Self.login" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="programs" EntityType="Self.programs" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="semester" EntityType="Self.semester" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="semestercourse" EntityType="Self.semestercourse" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="semesterfees" EntityType="Self.semesterfees" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="student" EntityType="Self.student" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="csis" store:Type="Tables" />
+          <EntitySet Name="finaltrans" EntityType="Self.finaltrans" store:Type="Views" store:Schema="csis">
+            <DefiningQuery>SELECT
+`finaltrans`.`name`, 
+`finaltrans`.`DOB`, 
+`finaltrans`.`depart`, 
+`finaltrans`.`program`, 
+`finaltrans`.`requiredCredit`, 
+`finaltrans`.`code`, 
+`finaltrans`.`description`, 
+`finaltrans`.`student_id`, 
+`finaltrans`.`semesterName`, 
+`finaltrans`.`Grade`, 
+`finaltrans`.`gradepoint`
+FROM `finaltrans` AS `finaltrans`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="course_ibfk_1" Association="Self.course_ibfk_1">
+            <End Role="department" EntitySet="department" />
+            <End Role="course" EntitySet="course" />
+          </AssociationSet>
+          <AssociationSet Name="courseadvisor_ibfk_1" Association="Self.courseadvisor_ibfk_1">
+            <End Role="user" EntitySet="user" />
+            <End Role="courseadvisor" EntitySet="courseadvisor" />
+          </AssociationSet>
+          <AssociationSet Name="courseadvisor_ibfk_2" Association="Self.courseadvisor_ibfk_2">
+            <End Role="department" EntitySet="department" />
+            <End Role="courseadvisor" EntitySet="courseadvisor" />
+          </AssociationSet>
+          <AssociationSet Name="courseregistration_ibfk_1" Association="Self.courseregistration_ibfk_1">
+            <End Role="student" EntitySet="student" />
+            <End Role="courseregistration" EntitySet="courseregistration" />
+          </AssociationSet>
+          <AssociationSet Name="courseregistration_ibfk_2" Association="Self.courseregistration_ibfk_2">
+            <End Role="semestercourse" EntitySet="semestercourse" />
+            <End Role="courseregistration" EntitySet="courseregistration" />
+          </AssociationSet>
+          <AssociationSet Name="feespayment_ibfk_1" Association="Self.feespayment_ibfk_1">
+            <End Role="semesterfees" EntitySet="semesterfees" />
+            <End Role="feespayment" EntitySet="feespayment" />
+          </AssociationSet>
+          <AssociationSet Name="feespayment_ibfk_2" Association="Self.feespayment_ibfk_2">
+            <End Role="student" EntitySet="student" />
+            <End Role="feespayment" EntitySet="feespayment" />
+          </AssociationSet>
+          <AssociationSet Name="lecturer_ibfk_1" Association="Self.lecturer_ibfk_1">
+            <End Role="user" EntitySet="user" />
+            <End Role="lecturer" EntitySet="lecturer" />
+          </AssociationSet>
+          <AssociationSet Name="lecturer_ibfk_2" Association="Self.lecturer_ibfk_2">
+            <End Role="department" EntitySet="department" />
+            <End Role="lecturer" EntitySet="lecturer" />
+          </AssociationSet>
+          <AssociationSet Name="login_ibfk_1" Association="Self.login_ibfk_1">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="login" EntitySet="login" />
+          </AssociationSet>
+          <AssociationSet Name="login_ibfk_2" Association="Self.login_ibfk_2">
+            <End Role="user" EntitySet="user" />
+            <End Role="login" EntitySet="login" />
+          </AssociationSet>
+          <AssociationSet Name="programs_ibfk_1" Association="Self.programs_ibfk_1">
+            <End Role="department" EntitySet="department" />
+            <End Role="programs" EntitySet="programs" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_1" Association="Self.semestercourse_ibfk_1">
+            <End Role="semester" EntitySet="semester" />
+            <End Role="semestercourse" EntitySet="semestercourse" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_2" Association="Self.semestercourse_ibfk_2">
+            <End Role="course" EntitySet="course" />
+            <End Role="semestercourse" EntitySet="semestercourse" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_3" Association="Self.semestercourse_ibfk_3">
+            <End Role="lecturehalls" EntitySet="lecturehalls" />
+            <End Role="semestercourse" EntitySet="semestercourse" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_4" Association="Self.semestercourse_ibfk_4">
+            <End Role="lecturer" EntitySet="lecturer" />
+            <End Role="semestercourse" EntitySet="semestercourse" />
+          </AssociationSet>
+          <AssociationSet Name="semesterfees_ibfk_1" Association="Self.semesterfees_ibfk_1">
+            <End Role="semester" EntitySet="semester" />
+            <End Role="semesterfees" EntitySet="semesterfees" />
+          </AssociationSet>
+          <AssociationSet Name="semesterfees_ibfk_2" Association="Self.semesterfees_ibfk_2">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="semesterfees" EntitySet="semesterfees" />
+          </AssociationSet>
+          <AssociationSet Name="semesterfees_ibfk_3" Association="Self.semesterfees_ibfk_3">
+            <End Role="student" EntitySet="student" />
+            <End Role="semesterfees" EntitySet="semesterfees" />
+          </AssociationSet>
+          <AssociationSet Name="student_ibfk_1" Association="Self.student_ibfk_1">
+            <End Role="user" EntitySet="user" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="student_ibfk_2" Association="Self.student_ibfk_2">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="csisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="course">
+          <Key>
+            <PropertyRef Name="course_id" />
+          </Key>
+          <Property Name="course_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="department" Type="Int32" Nullable="false" />
+          <Property Name="credit" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="department1" Relationship="Self.course_ibfk_1" FromRole="course" ToRole="department" />
+          <NavigationProperty Name="semestercourses" Relationship="Self.semestercourse_ibfk_2" FromRole="course" ToRole="semestercourse" />
+        </EntityType>
+        <EntityType Name="courseadvisor">
+          <Key>
+            <PropertyRef Name="advisor_id" />
+          </Key>
+          <Property Name="advisor_id" Type="Int32" Nullable="false" />
+          <Property Name="department" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.courseadvisor_ibfk_1" FromRole="courseadvisor" ToRole="user" />
+          <NavigationProperty Name="department1" Relationship="Self.courseadvisor_ibfk_2" FromRole="courseadvisor" ToRole="department" />
+        </EntityType>
+        <EntityType Name="courseregistration">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="semesterCourse_id" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="semesterCourse_id" Type="Int32" Nullable="false" />
+          <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gradepoint" Type="Double" />
+          <NavigationProperty Name="student" Relationship="Self.courseregistration_ibfk_1" FromRole="courseregistration" ToRole="student" />
+          <NavigationProperty Name="semestercourse" Relationship="Self.courseregistration_ibfk_2" FromRole="courseregistration" ToRole="semestercourse" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="courses" Relationship="Self.course_ibfk_1" FromRole="department" ToRole="course" />
+          <NavigationProperty Name="courseadvisors" Relationship="Self.courseadvisor_ibfk_2" FromRole="department" ToRole="courseadvisor" />
+          <NavigationProperty Name="lecturers" Relationship="Self.lecturer_ibfk_2" FromRole="department" ToRole="lecturer" />
+          <NavigationProperty Name="programs" Relationship="Self.programs_ibfk_1" FromRole="department" ToRole="programs" />
+        </EntityType>
+        <EntityType Name="feespayment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="semester_fee_id" Type="Int32" Nullable="false" />
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="semesterfee" Relationship="Self.feespayment_ibfk_1" FromRole="feespayment" ToRole="semesterfees" />
+          <NavigationProperty Name="student" Relationship="Self.feespayment_ibfk_2" FromRole="feespayment" ToRole="student" />
+        </EntityType>
+        <EntityType Name="lecturehall">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="building" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="room_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="space" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="semestercourses" Relationship="Self.semestercourse_ibfk_3" FromRole="lecturehalls" ToRole="semestercourse" />
+        </EntityType>
+        <EntityType Name="lecturer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="department" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="department1" Relationship="Self.lecturer_ibfk_2" FromRole="lecturer" ToRole="department" />
+          <NavigationProperty Name="user" Relationship="Self.lecturer_ibfk_1" FromRole="lecturer" ToRole="user" />
+          <NavigationProperty Name="semestercourses" Relationship="Self.semestercourse_ibfk_4" FromRole="lecturer" ToRole="semestercourse" />
+        </EntityType>
+        <EntityType Name="login">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="role" Relationship="Self.login_ibfk_1" FromRole="login" ToRole="roles" />
+          <NavigationProperty Name="user" Relationship="Self.login_ibfk_2" FromRole="login" ToRole="user" />
+        </EntityType>
+        <EntityType Name="program">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department" Type="Int32" Nullable="false" />
+          <Property Name="requiredCredit" Type="Int32" Nullable="false" />
+          <Property Name="termFees" Type="Double" Nullable="false" />
+          <NavigationProperty Name="department1" Relationship="Self.programs_ibfk_1" FromRole="programs" ToRole="department" />
+          <NavigationProperty Name="semesterfees" Relationship="Self.semesterfees_ibfk_2" FromRole="programs" ToRole="semesterfees" />
+          <NavigationProperty Name="students" Relationship="Self.student_ibfk_2" FromRole="programs" ToRole="student" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="logins" Relationship="Self.login_ibfk_1" FromRole="roles" ToRole="login" />
+        </EntityType>
+        <EntityType Name="semester">
+          <Key>
+            <PropertyRef Name="semester_id" />
+          </Key>
+          <Property Name="semester_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" />
+          <Property Name="DNE" Type="DateTime" />
+          <NavigationProperty Name="semestercourses" Relationship="Self.semestercourse_ibfk_1" FromRole="semester" ToRole="semestercourse" />
+          <NavigationProperty Name="semesterfees" Relationship="Self.semesterfees_ibfk_1" FromRole="semester" ToRole="semesterfees" />
+        </EntityType>
+        <EntityType Name="semestercourse">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="course_id" Type="Int32" Nullable="false" />
+          <Property Name="semester_id" Type="Int32" Nullable="false" />
+          <Property Name="day" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="start_time" Type="Time" Nullable="false" />
+          <Property Name="end_time" Type="Time" Nullable="false" />
+          <Property Name="lecture_hall" Type="Int32" Nullable="false" />
+          <Property Name="lecturer" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="course" Relationship="Self.semestercourse_ibfk_2" FromRole="semestercourse" ToRole="course" />
+          <NavigationProperty Name="courseregistrations" Relationship="Self.courseregistration_ibfk_2" FromRole="semestercourse" ToRole="courseregistration" />
+          <NavigationProperty Name="lecturehall" Relationship="Self.semestercourse_ibfk_3" FromRole="semestercourse" ToRole="lecturehalls" />
+          <NavigationProperty Name="lecturer1" Relationship="Self.semestercourse_ibfk_4" FromRole="semestercourse" ToRole="lecturer" />
+          <NavigationProperty Name="semester" Relationship="Self.semestercourse_ibfk_1" FromRole="semestercourse" ToRole="semester" />
+        </EntityType>
+        <EntityType Name="semesterfee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="program_id" Type="Int32" Nullable="false" />
+          <Property Name="semester_id" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="feespayments" Relationship="Self.feespayment_ibfk_1" FromRole="semesterfees" ToRole="feespayment" />
+          <NavigationProperty Name="program" Relationship="Self.semesterfees_ibfk_2" FromRole="semesterfees" ToRole="programs" />
+          <NavigationProperty Name="semester" Relationship="Self.semesterfees_ibfk_1" FromRole="semesterfees" ToRole="semester" />
+          <NavigationProperty Name="student" Relationship="Self.semesterfees_ibfk_3" FromRole="semesterfees" ToRole="student" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="program" Type="Int32" Nullable="false" />
+          <Property Name="admission_date" Type="DateTime" Nullable="false" />
+          <Property Name="completion_date" Type="DateTime" Nullable="false" />
+          <Property Name="user_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="courseregistrations" Relationship="Self.courseregistration_ibfk_1" FromRole="student" ToRole="courseregistration" />
+          <NavigationProperty Name="feespayments" Relationship="Self.feespayment_ibfk_2" FromRole="student" ToRole="feespayment" />
+          <NavigationProperty Name="program1" Relationship="Self.student_ibfk_2" FromRole="student" ToRole="programs" />
+          <NavigationProperty Name="semesterfees" Relationship="Self.semesterfees_ibfk_3" FromRole="student" ToRole="semesterfees" />
+          <NavigationProperty Name="user" Relationship="Self.student_ibfk_1" FromRole="student" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="courseadvisors" Relationship="Self.courseadvisor_ibfk_1" FromRole="user" ToRole="courseadvisor" />
+          <NavigationProperty Name="lecturers" Relationship="Self.lecturer_ibfk_1" FromRole="user" ToRole="lecturer" />
+          <NavigationProperty Name="login" Relationship="Self.login_ibfk_2" FromRole="user" ToRole="login" />
+          <NavigationProperty Name="students" Relationship="Self.student_ibfk_1" FromRole="user" ToRole="student" />
+        </EntityType>
+        <EntityType Name="finaltran">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="depart" />
+            <PropertyRef Name="program" />
+            <PropertyRef Name="requiredCredit" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" />
+          <Property Name="depart" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="program" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="requiredCredit" Type="Int32" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="semesterName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="gradepoint" Type="Double" />
+        </EntityType>
+        <Association Name="course_ibfk_1">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="course" Type="Self.course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="course">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_2">
+          <End Role="course" Type="Self.course" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course">
+              <PropertyRef Name="course_id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseadvisor_ibfk_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="courseadvisor" Type="Self.courseadvisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="courseadvisor">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseadvisor_ibfk_2">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="courseadvisor" Type="Self.courseadvisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="courseadvisor">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseregistration_ibfk_1">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="courseregistration" Type="Self.courseregistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="courseregistration">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseregistration_ibfk_2">
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="1" />
+          <End Role="courseregistration" Type="Self.courseregistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semestercourse">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="courseregistration">
+              <PropertyRef Name="semesterCourse_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lecturer_ibfk_2">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="lecturer">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="programs_ibfk_1">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="programs" Type="Self.program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="programs">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="feespayment_ibfk_1">
+          <End Role="semesterfees" Type="Self.semesterfee" Multiplicity="1" />
+          <End Role="feespayment" Type="Self.feespayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semesterfees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="feespayment">
+              <PropertyRef Name="semester_fee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="feespayment_ibfk_2">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="feespayment" Type="Self.feespayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="feespayment">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_3">
+          <End Role="lecturehalls" Type="Self.lecturehall" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturehalls">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="lecture_hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lecturer_ibfk_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="lecturer">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_4">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="lecturer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="login_ibfk_1">
+          <End Role="roles" Type="Self.role" Multiplicity="1" />
+          <End Role="login" Type="Self.login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="login">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="login_ibfk_2">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="login" Type="Self.login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="login">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semesterfees_ibfk_2">
+          <End Role="programs" Type="Self.program" Multiplicity="1" />
+          <End Role="semesterfees" Type="Self.semesterfee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="semesterfees">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_ibfk_2">
+          <End Role="programs" Type="Self.program" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="program" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semestercourse_ibfk_1">
+          <End Role="semester" Type="Self.semester" Multiplicity="1" />
+          <End Role="semestercourse" Type="Self.semestercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semester">
+              <PropertyRef Name="semester_id" />
+            </Principal>
+            <Dependent Role="semestercourse">
+              <PropertyRef Name="semester_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semesterfees_ibfk_1">
+          <End Role="semester" Type="Self.semester" Multiplicity="1" />
+          <End Role="semesterfees" Type="Self.semesterfee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semester">
+              <PropertyRef Name="semester_id" />
+            </Principal>
+            <Dependent Role="semesterfees">
+              <PropertyRef Name="semester_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="semesterfees_ibfk_3">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="semesterfees" Type="Self.semesterfee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="semesterfees">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="student_ibfk_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="csisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="courses" EntityType="Self.course" />
+          <EntitySet Name="courseadvisors" EntityType="Self.courseadvisor" />
+          <EntitySet Name="courseregistrations" EntityType="Self.courseregistration" />
+          <EntitySet Name="departments" EntityType="Self.department" />
+          <EntitySet Name="feespayments" EntityType="Self.feespayment" />
+          <EntitySet Name="lecturehalls" EntityType="Self.lecturehall" />
+          <EntitySet Name="lecturers" EntityType="Self.lecturer" />
+          <EntitySet Name="logins" EntityType="Self.login" />
+          <EntitySet Name="programs" EntityType="Self.program" />
+          <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="semesters" EntityType="Self.semester" />
+          <EntitySet Name="semestercourses" EntityType="Self.semestercourse" />
+          <EntitySet Name="semesterfees" EntityType="Self.semesterfee" />
+          <EntitySet Name="students" EntityType="Self.student" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="finaltrans" EntityType="Self.finaltran" />
+          <AssociationSet Name="course_ibfk_1" Association="Self.course_ibfk_1">
+            <End Role="department" EntitySet="departments" />
+            <End Role="course" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_2" Association="Self.semestercourse_ibfk_2">
+            <End Role="course" EntitySet="courses" />
+            <End Role="semestercourse" EntitySet="semestercourses" />
+          </AssociationSet>
+          <AssociationSet Name="courseadvisor_ibfk_1" Association="Self.courseadvisor_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="courseadvisor" EntitySet="courseadvisors" />
+          </AssociationSet>
+          <AssociationSet Name="courseadvisor_ibfk_2" Association="Self.courseadvisor_ibfk_2">
+            <End Role="department" EntitySet="departments" />
+            <End Role="courseadvisor" EntitySet="courseadvisors" />
+          </AssociationSet>
+          <AssociationSet Name="courseregistration_ibfk_1" Association="Self.courseregistration_ibfk_1">
+            <End Role="student" EntitySet="students" />
+            <End Role="courseregistration" EntitySet="courseregistrations" />
+          </AssociationSet>
+          <AssociationSet Name="courseregistration_ibfk_2" Association="Self.courseregistration_ibfk_2">
+            <End Role="semestercourse" EntitySet="semestercourses" />
+            <End Role="courseregistration" EntitySet="courseregistrations" />
+          </AssociationSet>
+          <AssociationSet Name="lecturer_ibfk_2" Association="Self.lecturer_ibfk_2">
+            <End Role="department" EntitySet="departments" />
+            <End Role="lecturer" EntitySet="lecturers" />
+          </AssociationSet>
+          <AssociationSet Name="programs_ibfk_1" Association="Self.programs_ibfk_1">
+            <End Role="department" EntitySet="departments" />
+            <End Role="programs" EntitySet="programs" />
+          </AssociationSet>
+          <AssociationSet Name="feespayment_ibfk_1" Association="Self.feespayment_ibfk_1">
+            <End Role="semesterfees" EntitySet="semesterfees" />
+            <End Role="feespayment" EntitySet="feespayments" />
+          </AssociationSet>
+          <AssociationSet Name="feespayment_ibfk_2" Association="Self.feespayment_ibfk_2">
+            <End Role="student" EntitySet="students" />
+            <End Role="feespayment" EntitySet="feespayments" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_3" Association="Self.semestercourse_ibfk_3">
+            <End Role="lecturehalls" EntitySet="lecturehalls" />
+            <End Role="semestercourse" EntitySet="semestercourses" />
+          </AssociationSet>
+          <AssociationSet Name="lecturer_ibfk_1" Association="Self.lecturer_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="lecturer" EntitySet="lecturers" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_4" Association="Self.semestercourse_ibfk_4">
+            <End Role="lecturer" EntitySet="lecturers" />
+            <End Role="semestercourse" EntitySet="semestercourses" />
+          </AssociationSet>
+          <AssociationSet Name="login_ibfk_1" Association="Self.login_ibfk_1">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="login" EntitySet="logins" />
+          </AssociationSet>
+          <AssociationSet Name="login_ibfk_2" Association="Self.login_ibfk_2">
+            <End Role="user" EntitySet="users" />
+            <End Role="login" EntitySet="logins" />
+          </AssociationSet>
+          <AssociationSet Name="semesterfees_ibfk_2" Association="Self.semesterfees_ibfk_2">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="semesterfees" EntitySet="semesterfees" />
+          </AssociationSet>
+          <AssociationSet Name="student_ibfk_2" Association="Self.student_ibfk_2">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="semestercourse_ibfk_1" Association="Self.semestercourse_ibfk_1">
+            <End Role="semester" EntitySet="semesters" />
+            <End Role="semestercourse" EntitySet="semestercourses" />
+          </AssociationSet>
+          <AssociationSet Name="semesterfees_ibfk_1" Association="Self.semesterfees_ibfk_1">
+            <End Role="semester" EntitySet="semesters" />
+            <End Role="semesterfees" EntitySet="semesterfees" />
+          </AssociationSet>
+          <AssociationSet Name="semesterfees_ibfk_3" Association="Self.semesterfees_ibfk_3">
+            <End Role="student" EntitySet="students" />
+            <End Role="semesterfees" EntitySet="semesterfees" />
+          </AssociationSet>
+          <AssociationSet Name="student_ibfk_1" Association="Self.student_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <FunctionImport Name="transcript" ReturnType="Collection(csisModel.transcript_Result)">
+            <Parameter Name="id_input" Mode="In" Type="Int32" />
+            <Parameter Name="code" Mode="Out" Type="String" />
+            <Parameter Name="description" Mode="Out" Type="String" />
+            <Parameter Name="SsemesterName" Mode="Out" Type="String" />
+            <Parameter Name="GRADE" Mode="Out" Type="String" />
+            <Parameter Name="gradepoint" Mode="Out" Type="Double" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="transcript_Result" />
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="csisModelStoreContainer" CdmEntityContainer="csisEntities">
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="csisModel.course">
+              <MappingFragment StoreEntitySet="course">
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courseadvisors">
+            <EntityTypeMapping TypeName="csisModel.courseadvisor">
+              <MappingFragment StoreEntitySet="courseadvisor">
+                <ScalarProperty Name="advisor_id" ColumnName="advisor_id" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courseregistrations">
+            <EntityTypeMapping TypeName="csisModel.courseregistration">
+              <MappingFragment StoreEntitySet="courseregistration">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="semesterCourse_id" ColumnName="semesterCourse_id" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="gradepoint" ColumnName="gradepoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="csisModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="feespayments">
+            <EntityTypeMapping TypeName="csisModel.feespayment">
+              <MappingFragment StoreEntitySet="feespayment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="semester_fee_id" ColumnName="semester_fee_id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lecturehalls">
+            <EntityTypeMapping TypeName="csisModel.lecturehall">
+              <MappingFragment StoreEntitySet="lecturehalls">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="building" ColumnName="building" />
+                <ScalarProperty Name="room_number" ColumnName="room_number" />
+                <ScalarProperty Name="space" ColumnName="space" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lecturers">
+            <EntityTypeMapping TypeName="csisModel.lecturer">
+              <MappingFragment StoreEntitySet="lecturer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logins">
+            <EntityTypeMapping TypeName="csisModel.login">
+              <MappingFragment StoreEntitySet="login">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="programs">
+            <EntityTypeMapping TypeName="csisModel.program">
+              <MappingFragment StoreEntitySet="programs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="requiredCredit" ColumnName="requiredCredit" />
+                <ScalarProperty Name="termFees" ColumnName="termFees" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="csisModel.role">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="semesters">
+            <EntityTypeMapping TypeName="csisModel.semester">
+              <MappingFragment StoreEntitySet="semester">
+                <ScalarProperty Name="semester_id" ColumnName="semester_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="DNE" ColumnName="DNE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="semestercourses">
+            <EntityTypeMapping TypeName="csisModel.semestercourse">
+              <MappingFragment StoreEntitySet="semestercourse">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="semester_id" ColumnName="semester_id" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="lecture_hall" ColumnName="lecture_hall" />
+                <ScalarProperty Name="lecturer" ColumnName="lecturer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="semesterfees">
+            <EntityTypeMapping TypeName="csisModel.semesterfee">
+              <MappingFragment StoreEntitySet="semesterfees">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="semester_id" ColumnName="semester_id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="csisModel.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="program" ColumnName="program" />
+                <ScalarProperty Name="admission_date" ColumnName="admission_date" />
+                <ScalarProperty Name="completion_date" ColumnName="completion_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="csisModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="finaltrans">
+            <EntityTypeMapping TypeName="csisModel.finaltran">
+              <MappingFragment StoreEntitySet="finaltrans">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="depart" ColumnName="depart" />
+                <ScalarProperty Name="program" ColumnName="program" />
+                <ScalarProperty Name="requiredCredit" ColumnName="requiredCredit" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="semesterName" ColumnName="semesterName" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="gradepoint" ColumnName="gradepoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="transcript" FunctionName="csisModel.Store.transcript">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="csisModel.transcript_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
