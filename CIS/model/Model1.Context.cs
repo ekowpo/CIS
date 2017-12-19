@@ -43,6 +43,9 @@ namespace CIS.model
         public virtual DbSet<student> students { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<finaltran> finaltrans { get; set; }
+        public virtual DbSet<gpa> gpas { get; set; }
+        public virtual DbSet<reportdata> reportdatas { get; set; }
+        public virtual DbSet<reportdemog> reportdemogs { get; set; }
     
         public virtual ObjectResult<transcript_Result> transcript(Nullable<int> id_input, ObjectParameter code, ObjectParameter description, ObjectParameter ssemesterName, ObjectParameter gRADE, ObjectParameter gradepoint)
         {

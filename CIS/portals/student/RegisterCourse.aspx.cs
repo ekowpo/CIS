@@ -57,17 +57,36 @@ namespace CIS.portals.student
 
                 if (CIS.App_Code.SemesterCourse.getCurrentClassSize(semesterCourseId) <= sc.lecturehall.space)
                 {
-                    
-                    if (!addCourse.Contains(sc) && !regCourse.Contains(semesterCourseId))
+
+                    if (!regCourse.Contains(semesterCourseId))
                     {
-                        
-                        addCourse.Add(CIS.App_Code.SemesterCourse.getSemesterCourse(semesterCourseId));
+                        bool state = false;
+                        foreach(CIS.model.semestercourse cs in addCourse)
+                        {
+                            if(cs.course_id == sc.course_id)
+                            {
+                                state = true;
+                                break;
+                            }
+                        }
+                        if (!state)
+                        {
+
+                            addCourse.Add(CIS.App_Code.SemesterCourse.getSemesterCourse(semesterCourseId));
+                            regCourse.Add(semesterCourseId);
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Info", "error('Course has already been added')", true);
+
+                        }
                     }
                     else
                     {
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Info", "error('Course has already been added')", true);
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Info", "error('Course has already been registered')", true);
 
                     }
+
                 }
                 else
                 {
@@ -94,13 +113,14 @@ namespace CIS.portals.student
                 // gdvselectedCourse.DataBind();
                 gdvselectedCourse.DataSource = addCourse;
                 gdvselectedCourse.DataBind();
+                // Page.ClientScript.RegisterStartupScript(this.GetType(), "Info", "hide('selectedCourse')", true);
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Info", "hide('continue')", true);
 
             }
             else
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Info", "error('No course Added')", true);
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "Info", "hide('selectedCourse')", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Info", "hide('continue')", true);
 
             }
 
@@ -133,6 +153,9 @@ namespace CIS.portals.student
                 else
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Info", "error('"+message+"')", true);
+                    // Page.ClientScript.RegisterStartupScript(this.GetType(), "Info", "hide('selectedCourse')", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Info", "hide('continue')", true);
+
                     notsuccessfull.Add(id);
                 }
 

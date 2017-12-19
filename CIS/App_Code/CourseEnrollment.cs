@@ -40,7 +40,7 @@ namespace CIS.App_Code
             using (var context = new csisEntities())
             {
                var sc= context.semestercourses.Where(c => c.id == newcourseregistration.semesterCourse_id).FirstOrDefault();
-                CIS.model.courseregistration semCourse = context.courseregistrations.Where(c => ((c.semestercourse.start_time >= sc.start_time) && (c.semestercourse.end_time <= sc.end_time) && (c.semestercourse.day.Equals(sc.day) && (c.student_id == newcourseregistration.student_id)))).FirstOrDefault<CIS.model.courseregistration>();
+                CIS.model.courseregistration semCourse = context.courseregistrations.Where(c => ((c.semestercourse.start_time >= sc.start_time) &&(c.semestercourse.semester_id== sc.semester_id) && (c.semestercourse.end_time <= sc.end_time) && (c.semestercourse.day.Equals(sc.day) && (c.student_id == newcourseregistration.student_id)))).FirstOrDefault<CIS.model.courseregistration>();
                 if (semCourse == null)
                 {
                     context.courseregistrations.Add(newcourseregistration);

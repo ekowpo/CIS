@@ -38,8 +38,8 @@ namespace CIS.portals.student
 
         protected void gdvRegCourses_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int student_id = int.Parse(gdvRegCourses.DataKeys[0].Values["student_id"].ToString());
-            int semesterCourse_id = int.Parse(gdvRegCourses.DataKeys[0].Values["semesterCourse_id"].ToString());
+            int student_id = int.Parse(gdvRegCourses.SelectedDataKey.Values["student_id"].ToString());
+            int semesterCourse_id = int.Parse(gdvRegCourses.SelectedDataKey.Values["semesterCourse_id"].ToString());
             string message =CIS.App_Code.CourseEnrollment.dropRegisteredCourse(semesterCourse_id, student_id);
             if (message.Equals("success"))
             {

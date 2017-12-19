@@ -176,6 +176,63 @@ warning 6002: The table/view 'def.csis.finaltrans' does not have a primary key d
           <Property Name="Grade" Type="varchar" MaxLength="2" />
           <Property Name="gradepoint" Type="double" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.csis.gpas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="gpas">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="semester_id" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="semester_id" Type="int" Nullable="false" />
+          <Property Name="gpa" Type="double" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.csis.reportdata' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="reportdata">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="semesterCourse_id" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="description" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="semesterCourse_id" Type="int" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="description" Type="text" Nullable="false" />
+          <Property Name="Grade" Type="varchar" MaxLength="2" />
+          <Property Name="gradepoint" Type="double" />
+          <Property Name="id" Type="int" />
+          <Property Name="course_id" Type="int" />
+          <Property Name="semester_id" Type="int" />
+          <Property Name="sem" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.csis.reportdemog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="reportdemog">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="email" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="program" />
+            <PropertyRef Name="admission_date" />
+            <PropertyRef Name="completion_date" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="requiredCredit" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="fullname" Type="varchar" MaxLength="511" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="email" Type="text" Nullable="false" />
+          <Property Name="Address" Type="text" Nullable="false" />
+          <Property Name="program" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="admission_date" Type="date" Nullable="false" />
+          <Property Name="completion_date" Type="date" Nullable="false" />
+          <Property Name="name" Type="text" Nullable="false" />
+          <Property Name="requiredCredit" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="course_ibfk_1">
           <End Role="department" Type="Self.department" Multiplicity="1" />
           <End Role="course" Type="Self.course" Multiplicity="*" />
@@ -466,6 +523,41 @@ warning 6002: The table/view 'def.csis.finaltrans' does not have a primary key d
 `finaltrans`.`Grade`, 
 `finaltrans`.`gradepoint`
 FROM `finaltrans` AS `finaltrans`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="gpas" EntityType="Self.gpas" store:Type="Views" store:Schema="csis">
+            <DefiningQuery>SELECT
+`gpas`.`student_id`, 
+`gpas`.`semester_id`, 
+`gpas`.`gpa`
+FROM `gpas` AS `gpas`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="reportdata" EntityType="Self.reportdata" store:Type="Views" store:Schema="csis">
+            <DefiningQuery>SELECT
+`reportdata`.`student_id`, 
+`reportdata`.`semesterCourse_id`, 
+`reportdata`.`code`, 
+`reportdata`.`description`, 
+`reportdata`.`Grade`, 
+`reportdata`.`gradepoint`, 
+`reportdata`.`id`, 
+`reportdata`.`course_id`, 
+`reportdata`.`semester_id`, 
+`reportdata`.`sem`
+FROM `reportdata` AS `reportdata`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="reportdemog" EntityType="Self.reportdemog" store:Type="Views" store:Schema="csis">
+            <DefiningQuery>SELECT
+`reportdemog`.`student_id`, 
+`reportdemog`.`fullname`, 
+`reportdemog`.`DOB`, 
+`reportdemog`.`email`, 
+`reportdemog`.`Address`, 
+`reportdemog`.`program`, 
+`reportdemog`.`admission_date`, 
+`reportdemog`.`completion_date`, 
+`reportdemog`.`name`, 
+`reportdemog`.`requiredCredit`
+FROM `reportdemog` AS `reportdemog`</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="course_ibfk_1" Association="Self.course_ibfk_1">
             <End Role="department" EntitySet="department" />
@@ -768,6 +860,57 @@ FROM `finaltrans` AS `finaltrans`</DefiningQuery>
           <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="gradepoint" Type="Double" />
         </EntityType>
+        <EntityType Name="gpa">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="semester_id" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="semester_id" Type="Int32" Nullable="false" />
+          <Property Name="gpa1" Type="Double" />
+        </EntityType>
+        <EntityType Name="reportdata">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="semesterCourse_id" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="description" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="semesterCourse_id" Type="Int32" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="gradepoint" Type="Double" />
+          <Property Name="id" Type="Int32" />
+          <Property Name="course_id" Type="Int32" />
+          <Property Name="semester_id" Type="Int32" />
+          <Property Name="sem" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="reportdemog">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="email" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="program" />
+            <PropertyRef Name="admission_date" />
+            <PropertyRef Name="completion_date" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="requiredCredit" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="fullname" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="program" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admission_date" Type="DateTime" Nullable="false" />
+          <Property Name="completion_date" Type="DateTime" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="requiredCredit" Type="Int32" Nullable="false" />
+        </EntityType>
         <Association Name="course_ibfk_1">
           <End Role="department" Type="Self.department" Multiplicity="1" />
           <End Role="course" Type="Self.course" Multiplicity="*" />
@@ -1037,6 +1180,9 @@ FROM `finaltrans` AS `finaltrans`</DefiningQuery>
           <EntitySet Name="students" EntityType="Self.student" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="finaltrans" EntityType="Self.finaltran" />
+          <EntitySet Name="gpas" EntityType="Self.gpa" />
+          <EntitySet Name="reportdatas" EntityType="Self.reportdata" />
+          <EntitySet Name="reportdemogs" EntityType="Self.reportdemog" />
           <AssociationSet Name="course_ibfk_1" Association="Self.course_ibfk_1">
             <End Role="department" EntitySet="departments" />
             <End Role="course" EntitySet="courses" />
@@ -1311,6 +1457,47 @@ FROM `finaltrans` AS `finaltrans`</DefiningQuery>
                 <ScalarProperty Name="semesterName" ColumnName="semesterName" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="gradepoint" ColumnName="gradepoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gpas">
+            <EntityTypeMapping TypeName="csisModel.gpa">
+              <MappingFragment StoreEntitySet="gpas">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="semester_id" ColumnName="semester_id" />
+                <ScalarProperty Name="gpa1" ColumnName="gpa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reportdatas">
+            <EntityTypeMapping TypeName="csisModel.reportdata">
+              <MappingFragment StoreEntitySet="reportdata">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="semesterCourse_id" ColumnName="semesterCourse_id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="gradepoint" ColumnName="gradepoint" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="semester_id" ColumnName="semester_id" />
+                <ScalarProperty Name="sem" ColumnName="sem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reportdemogs">
+            <EntityTypeMapping TypeName="csisModel.reportdemog">
+              <MappingFragment StoreEntitySet="reportdemog">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="program" ColumnName="program" />
+                <ScalarProperty Name="admission_date" ColumnName="admission_date" />
+                <ScalarProperty Name="completion_date" ColumnName="completion_date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="requiredCredit" ColumnName="requiredCredit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
