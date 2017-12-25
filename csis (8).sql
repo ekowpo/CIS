@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2017 at 09:04 PM
+-- Generation Time: Dec 19, 2017 at 02:37 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -100,8 +100,9 @@ CREATE TABLE `courseregistration` (
 INSERT INTO `courseregistration` (`student_id`, `semesterCourse_id`, `Grade`, `Status`, `gradepoint`) VALUES
 (1, 2, 'A-', 'completed', 3.7),
 (1, 4, 'B+', 'completed', 3.3),
-(1, 6, 'B+', 'in-process', 3.3),
-(2, 6, '', 'in-process', NULL);
+(1, 5, '', 'in-process', NULL),
+(1, 6, 'B+', 'completed', 3.3),
+(1, 11, 'A', 'completed', 4);
 
 -- --------------------------------------------------------
 
@@ -158,6 +159,17 @@ CREATE TABLE `finaltrans` (
 ,`semesterName` varchar(25)
 ,`Grade` varchar(2)
 ,`gradepoint` double
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `gpas`
+--
+CREATE TABLE `gpas` (
+`student_id` int(11)
+,`semester_id` int(11)
+,`gpa` double
 );
 
 -- --------------------------------------------------------
@@ -257,6 +269,42 @@ INSERT INTO `programs` (`id`, `Name`, `Department`, `requiredCredit`, `termFees`
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `reportdata`
+--
+CREATE TABLE `reportdata` (
+`student_id` int(11)
+,`semesterCourse_id` int(11)
+,`code` varchar(10)
+,`description` text
+,`Grade` varchar(2)
+,`gradepoint` double
+,`id` int(11)
+,`course_id` int(11)
+,`semester_id` int(11)
+,`sem` varchar(25)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `reportdemog`
+--
+CREATE TABLE `reportdemog` (
+`student_id` int(11)
+,`fullname` varchar(511)
+,`DOB` date
+,`email` text
+,`Address` text
+,`program` varchar(255)
+,`admission_date` date
+,`completion_date` date
+,`name` text
+,`requiredCredit` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -294,10 +342,10 @@ CREATE TABLE `semester` (
 --
 
 INSERT INTO `semester` (`semester_id`, `name`, `startDate`, `endDate`, `DNE`) VALUES
-(1, 'Winter', '2018-01-07', '2018-05-20', '2018-03-12'),
-(2, 'Fall', '2017-09-05', '2017-12-20', '2017-11-06'),
+(1, 'Winter', '2017-01-07', '2017-05-20', '2017-03-12'),
+(2, 'Fall', '2016-09-05', '2016-12-20', '2016-11-06'),
 (3, 'Summer 1', '2018-06-04', '2018-07-18', '2018-06-15'),
-(4, 'Fall', '2018-08-08', '2018-12-20', '2018-09-20');
+(4, 'Fall', '2017-08-08', '2017-12-20', '2017-09-20');
 
 -- --------------------------------------------------------
 
@@ -351,7 +399,6 @@ CREATE TABLE `semesterfees` (
 --
 
 INSERT INTO `semesterfees` (`id`, `program_id`, `semester_id`, `amount`, `student_id`) VALUES
-(0, 1, 1, 6500, 1),
 (1, 1, 1, 6500, 1);
 
 -- --------------------------------------------------------
@@ -374,7 +421,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`student_id`, `program`, `admission_date`, `completion_date`, `user_id`, `status`) VALUES
-(1, 2, '2017-09-09', '2020-08-31', 'e_daniels', 'In-Progress'),
+(1, 2, '2017-01-09', '2020-08-31', 'e_daniels', 'In-Progress'),
 (2, 2, '2018-01-07', '2020-05-01', 'sun_test', 'In-Progress');
 
 -- --------------------------------------------------------
@@ -402,7 +449,7 @@ INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `DOB`, `email`, `phone
 ('e_attuq', 'eugene', 'r', '1977-12-02', 'r@f.com', '5145729132', 'ff'),
 ('e_daniels', 'Ekow', 'Daniels', '1989-10-05', 'ekowpo@yahoo.com', '5145729132', '2070 Boulevard de Maisonneuve'),
 ('n_nartey', 'nii', 'nartey', '1998-01-01', 'n_narty@gmail.com', '5145729132', '2090 boulved de maisonneuve'),
-('sun_test', 'test', 'data', '2017-12-05', 'test_data@gmail.com', '313-323-3232', 'djlncadnca.'),
+('sun_test', 'test', 'data', '1996-12-05', 'test_data@gmail.com', '313-323-3232', '2020 Crescent St, Montreal, QC H3G 2B8'),
 ('t_fe', 'Thomas G', 'Fevens', '1987-03-16', 'ft.@concordia.ca', '5148827881', 'h3h17d');
 
 -- --------------------------------------------------------
@@ -413,6 +460,33 @@ INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `DOB`, `email`, `phone
 DROP TABLE IF EXISTS `finaltrans`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `finaltrans`  AS  select concat_ws(' ',`user`.`first_name`,`user`.`last_name`) AS `name`,`user`.`DOB` AS `DOB`,`department`.`name` AS `depart`,`programs`.`Name` AS `program`,`programs`.`requiredCredit` AS `requiredCredit`,`course`.`code` AS `code`,`course`.`description` AS `description`,`student`.`student_id` AS `student_id`,concat_ws(' ',`semester`.`name`,year(`semester`.`startDate`)) AS `semesterName`,`courseregistration`.`Grade` AS `Grade`,`courseregistration`.`gradepoint` AS `gradepoint` from (((((((`courseregistration` left join `semestercourse` on((`courseregistration`.`semesterCourse_id` = `semestercourse`.`id`))) join `course` on((`semestercourse`.`course_id` = `course`.`course_id`))) join `semester` on((`semestercourse`.`semester_id` = `semester`.`semester_id`))) join `student` on((`courseregistration`.`student_id` = `student`.`student_id`))) join `programs` on((`student`.`program` = `programs`.`id`))) join `department` on((`programs`.`Department` = `department`.`departmentId`))) join `user` on((`student`.`user_id` = `user`.`user_id`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `gpas`
+--
+DROP TABLE IF EXISTS `gpas`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `gpas`  AS  select `courseregistration`.`student_id` AS `student_id`,`semestercourse`.`semester_id` AS `semester_id`,((sum(`courseregistration`.`gradepoint`) / (count(`courseregistration`.`gradepoint`) * 4.3)) * 4.3) AS `gpa` from (`courseregistration` join `semestercourse` on((`courseregistration`.`semesterCourse_id` = `semestercourse`.`id`))) group by `semestercourse`.`semester_id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `reportdata`
+--
+DROP TABLE IF EXISTS `reportdata`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `reportdata`  AS  select `courseregistration`.`student_id` AS `student_id`,`courseregistration`.`semesterCourse_id` AS `semesterCourse_id`,`course`.`code` AS `code`,`course`.`description` AS `description`,`courseregistration`.`Grade` AS `Grade`,`courseregistration`.`gradepoint` AS `gradepoint`,`semestercourse`.`id` AS `id`,`semestercourse`.`course_id` AS `course_id`,`semestercourse`.`semester_id` AS `semester_id`,concat(year(`semester`.`startDate`),' ',`semester`.`name`) AS `sem` from (((`courseregistration` left join `semestercourse` on((`courseregistration`.`semesterCourse_id` = `semestercourse`.`id`))) join `semester` on((`semestercourse`.`semester_id` = `semester`.`semester_id`))) join `course` on((`semestercourse`.`course_id` = `course`.`course_id`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `reportdemog`
+--
+DROP TABLE IF EXISTS `reportdemog`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `reportdemog`  AS  select `student`.`student_id` AS `student_id`,concat(`user`.`first_name`,' ',`user`.`last_name`) AS `fullname`,`user`.`DOB` AS `DOB`,`user`.`email` AS `email`,`user`.`Address` AS `Address`,`programs`.`Name` AS `program`,`student`.`admission_date` AS `admission_date`,`student`.`completion_date` AS `completion_date`,`department`.`name` AS `name`,`programs`.`requiredCredit` AS `requiredCredit` from (((`user` join `student` on((`user`.`user_id` = `student`.`user_id`))) join `programs` on((`student`.`program` = `programs`.`id`))) join `department` on((`programs`.`Department` = `department`.`departmentId`))) ;
 
 --
 -- Indexes for dumped tables
@@ -547,6 +621,11 @@ ALTER TABLE `department`
 --
 ALTER TABLE `feespayment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  --
+-- AUTO_INCREMENT for table `semesterfees`
+--
+ALTER TABLE `semesterfees`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `lecturehalls`
 --
